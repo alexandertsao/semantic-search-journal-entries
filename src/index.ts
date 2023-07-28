@@ -4,6 +4,7 @@ import {hideBin} from 'yargs/helpers'
 import { importFiles } from './importFiles'
 import { queryFiles } from './queryFiles'
 import { server } from './server'
+import { chatCompletions } from './chatCompletions'
 
 async function main() {
   const argv = yargs(hideBin(process.argv)).parseSync()
@@ -16,6 +17,8 @@ async function main() {
     await queryFiles(args[1] as string)
   } else if (args[0] == 'server') {
     await server()
+  } else if (args[0] == 'chatCompletions') {
+    await chatCompletions(args[1] as string)
   } else {
     console.error('Error: Function does not exist')
   }

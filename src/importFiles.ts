@@ -43,7 +43,7 @@ export async function importFiles (path: string) {
             const newFileText = await readFileData(fileName)
             if (newFileText) {
               const embedding = await createEmbedding(newFileText)
-              upsertEmbedding(embedding.data[0].embedding, fileName)
+              await upsertEmbedding(embedding.data[0].embedding, fileName)
             }
         }
     } catch {

@@ -1,6 +1,6 @@
 import {promises as fs} from 'fs'
-import { PineconeClient } from '@pinecone-database/pinecone'
-import { QueryResponse } from '@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch'
+import {PineconeClient} from '@pinecone-database/pinecone'
+import {QueryResponse} from '@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch'
 import {createEmbedding} from './createEmbedding'
 
 const pinecone = new PineconeClient()
@@ -17,24 +17,14 @@ async function getQueryResponse(queryEmbedding: number[]) {
   return queryResponse
 }
 
-interface QueryResultEntry {
-  score?: number
-  text: string
-}
-
 async function returnQueryResponse(queryResponse?: QueryResponse) {
-  const results: QueryResultEntry[] = []
+  const results: string[] = []
   if (queryResponse?.matches) {
     for (const match of queryResponse.matches) {
       try {
         const data = await fs.readFile(match.id)
-        const result = {
-          score: match.score,
-          text: data.toString()
-        }
-        results.push(result)
+        results.push(data.toString())
       } catch {
-        console.error(`Id ${match.id} not Found`)
       }
     }
   }
